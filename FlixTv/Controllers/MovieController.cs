@@ -1,4 +1,5 @@
-﻿using FlixTv.MyDatabase;
+﻿using FlixTv.Models;
+using FlixTv.MyDatabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace FlixTv.Controllers
         // GET: Movie
         public ActionResult Index()
         {
-            var movies = db.Movies.ToList();
-            return View(movies);
+            Movie movie = db.Movies.FirstOrDefault(x=>x.Title == "Titanic");
+            return View(movie);
         }
     }
 }
