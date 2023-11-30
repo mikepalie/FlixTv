@@ -15,8 +15,8 @@ namespace FlixTv.Controllers
         // GET: Movie
         public ActionResult Index()
         {
-            Movie movie = db.Movies.FirstOrDefault(x=>x.Title == "Titanic");
-            return View(movie);
+            
+            return View();
         }
     }
 }
