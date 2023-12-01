@@ -26,6 +26,28 @@
             loop: true,
             margin: 30,
         });
+        /*---------------Ajax Start-----------------*/
+        $(document).ready(function () {
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://ott-details.p.rapidapi.com/advancedsearch?start_year=1980&end_year=2023&min_imdb=6&genre=drama&type=movie&page=1",
+                "method": "GET",
+                "timeout": 0,
+                "headers": {
+                    "X-RapidAPI-Key": "3564570957msh024c72c33e69c52p1ee450jsna15c77966f6d",
+                    "X-RapidAPI-Host": "ott-details.p.rapidapi.com"
+                }
+            };
+
+            $.ajax(settings).done(function (response) {
+                var movies = response.results;
+                addMoviesToCarousel(movies, 0); // Start the process with the first movie
+            });
+        });
+        /*--------------- Ajax End-----------------*/
+
+        /*----------------Check if Image Url is Ok Start -------------------*/
 
         function checkImage(url, callback) {
             var img = new Image();
@@ -37,6 +59,9 @@
             };
             img.src = url;
         }
+        /*----------------Check if Image Url is Ok End -------------------*/
+
+        /*---------------------Add Movies To Carousel Start-------------------------*/
 
         function addMoviesToCarousel(movies, index) {
             if (index >= movies.length) {
@@ -76,30 +101,11 @@
                 addMoviesToCarousel(movies, index + 1); // Continue with the next movie
             });
         }
+        /*---------------------Add Movies To Carousel End-------------------------*/
 
-        $(document).ready(function () {
-            var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "https://ott-details.p.rapidapi.com/advancedsearch?start_year=1980&end_year=2023&min_imdb=6&genre=drama&type=movie&page=1",
-                "method": "GET",
-                "timeout": 0,
-                "headers": {
-                    "X-RapidAPI-Key": "3564570957msh024c72c33e69c52p1ee450jsna15c77966f6d",
-                    "X-RapidAPI-Host": "ott-details.p.rapidapi.com"
-                }
-            };
+        
 
-            $.ajax(settings).done(function (response) {
-                var movies = response.results;
-                addMoviesToCarousel(movies, 0); // Start the process with the first movie
-            });
-        });
     </script>
-
-
-   
-
 }
 
 
