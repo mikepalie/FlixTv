@@ -27,7 +27,7 @@
             margin: 30,
         });
         /*---------------Ajax Start-----------------*/
-        $(document).ready(function () {
+        $(document).ready(async function () {
             var settings = {
                 "async": true,
                 "crossDomain": true,
@@ -40,9 +40,9 @@
                 }
             };
 
-            $.ajax(settings).done(function (response) {
+            await $.ajax(settings).done(function (response) {
                 var movies = response.results;
-                addMoviesToCarousel(movies); 
+                addMovies(movies); 
                 
             });
             
@@ -51,7 +51,8 @@
 
         /*---------------------Add Movies To Carousel Start-------------------------*/
 
-        function addMoviesToCarousel(movies) {
+        async function addMovies(movies) {
+            var i = 0;
             for (var movie of movies) {
 
                 var releaseYear = movie.released;
@@ -59,8 +60,10 @@
                 var title = movie.title;
                 var imageUrl = movie.imageurl[0];
                 if (imageUrl == null) { continue; }
-                checkImage(imageUrl, title, genre, releaseYear);
-
+                await checkImage(imageUrl, title, genre, releaseYear,i);
+                
+                
+                i++;
             }
         }
         /*---------------------Add Movies To Carousel End-------------------------*/
@@ -69,24 +72,33 @@
 
         /*----------------Check if Image Url is Ok Start -------------------*/
 
-        async function checkImage(url,title,genre,releaseYear) {
+        async function checkImage(url,title,genre,releaseYear,i) {
+           
             var settings = {
                               "url": url,
                               "method": "GET",
                               "timeout": 0,
             };
 
-            await $.ajax(settings).done(function (response) {
-                addMovieCard(url, title, genre, releaseYear)
-            });
-            
+            result = await $.ajax(settings).done(async function (response) {
+                                
+                               await  console.log("ok");
+                           }).then(
+                                       async function (result) {
+                                        await addMovieToCarousel(url, title, genre, releaseYear, i)
+                                       }, 
+
+                                        async function (error) {
+                                            await console.log('Rejected:', error);
+                                        }
+                                  );    
         }
         /*----------------Check if Image Url is Ok End -------------------*/
 
         
 
         /*-----------------------Add MovieCard with Correct ImageUrl Start---------------------*/
-        function addMovieCard(imageUrl,title,genre,releaseYear) {
+        async function addMovieToCarousel(imageUrl,title,genre,releaseYear,i) {
             var element = `<div class="card">
                                                 <a href="details.html" class="card__cover">
                                                     <img src="${imageUrl}" alt="" style="height: 270px;">
@@ -101,7 +113,9 @@
                                                 </ul>
                                             </div>`;
 
-            $("#moviesForUser").trigger('add.owl.carousel', [element]).trigger('refresh.owl.carousel');
+            await $("#moviesForUser").trigger('add.owl.carousel', [element]).trigger('refresh.owl.carousel');
+            console.log(i);
+            console.log(title);
         }
         /*-----------------------Add MovieCard with Correct ImageUrl  End---------------------*/
     </script>
