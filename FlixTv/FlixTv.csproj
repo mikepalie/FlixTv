@@ -401,9 +401,10 @@
     <Content Include="Views\Shared\_ClientLayout.cshtml" />
     <Content Include="Views\Shared\ClientComponents\_NavigationBar.cshtml" />
     <Content Include="Views\Shared\ClientComponents\_Footer.cshtml" />
-    <Content Include="Views\Shared\ClientComponents\_Catalog.cshtml" />
+    <Content Include="Views\Home\_Catalog.cshtml" />
     <Content Include="Views\Shared\ClientComponents\_Plan.cshtml" />
     <Content Include="Views\Movie\Index.cshtml" />
+    <Content Include="Views\Movie\_MovieCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
