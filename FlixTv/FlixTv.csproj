@@ -408,6 +408,7 @@
     <Content Include="Views\Movie\_MovieCategories.cshtml" />
     <Content Include="Views\Movie\Category.cshtml" />
     <Content Include="Views\Movie\_FilterBar.cshtml" />
+    <Content Include="Views\Movie\_CategoryResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

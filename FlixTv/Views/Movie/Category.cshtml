@@ -1,11 +1,11 @@
 ﻿@model FlixTv.Models.Category
+   
 @{
     ViewBag.Title = "Category";
 }
 @Html.Partial("~/Views/Movie/_FilterBar.cshtml")
+@Html.Partial("~/Views/Movie/_CategoryResults.cshtml")
 
-
-<h2>Category Rocks</h2>
 
 @section scripts{
     <script src="~/www/main/js/jquery-3.5.1.min.js"></script>
@@ -21,7 +21,7 @@
 
     <script>
 
-        console.log(Model.year);
+        console.log("@Model.Genre ");
     </script>
 
 }
