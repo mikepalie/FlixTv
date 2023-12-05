@@ -190,6 +190,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="MyDatabase\ApplicationDbContext.cs" />
@@ -405,6 +406,8 @@
     <Content Include="Views\Shared\ClientComponents\_Plan.cshtml" />
     <Content Include="Views\Movie\Index.cshtml" />
     <Content Include="Views\Movie\_MovieCategories.cshtml" />
+    <Content Include="Views\Movie\Category.cshtml" />
+    <Content Include="Views\Movie\_FilterBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
