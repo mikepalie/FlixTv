@@ -19,9 +19,9 @@ namespace FlixTv.Controllers
             return View();
         }
 
-        public ActionResult Category(Category cat)
+        public ActionResult Category(string Genre, int Year)
         {
-           
+            Category cat = new Category() { Genre = Genre, Year = Year };
             return View(cat);
         }
     }
