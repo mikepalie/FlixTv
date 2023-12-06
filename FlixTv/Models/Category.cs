@@ -10,6 +10,6 @@ namespace FlixTv.Models
         public int CategoryId { get; set; }
         public string Genre { get; set; }
 
-        public int Year { get; set; }
+        public string Year { get; set; }
     }
 }

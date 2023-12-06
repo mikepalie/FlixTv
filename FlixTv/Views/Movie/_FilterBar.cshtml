@@ -1,13 +1,11 @@
-﻿
-
-<!-- Filters Bar -->
+﻿<!-- Filters Bar -->
 <div class="catalog catalog--page catalog--list">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="catalog__nav catalog__nav--relative">
                     <div class="catalog__select-wrap">
-                        <select class="catalog__select" name="genres">
+                        <select class="catalog__select" name="genres" id="genres">
                             <option value="All genres">All genres</option>
                             <option value="Action">Action</option>
                             <option value="Adult">Adult</option>
@@ -37,17 +35,18 @@
                             <option value="Western">Western</option>
                         </select>
 
-                        <select class="catalog__select" name="years">
+                        <select class="catalog__select" name="years" id="years">
                             <option value="All the years">All the years</option>
                             <option value="1">'70s</option>
-                            <option value="2">'80s</option>
+                            <option value="'80s">'80s</option>
                             <option value="3">'90s</option>
                             <option value="4">2000-10</option>
                             <option value="5">2010-20</option>
                             <option value="6">2021</option>
                         </select>
 
-                        <a href="@Url.Action("Category", "Movie", new {Genre="Comedy", Year=2000})">Search</a>
+
+                        <button id="search-btn">Search</button>
                     </div>
                 </div>
             </div>
@@ -55,3 +54,19 @@
     </div>
 </div>
 <!-- End Filters Bar -->
+@*================================================== Search Button Start====================================================*@
+<script>
+    $("#search-btn").click(apiCall);
+
+    function apiCall() {
+        let genre = $("#genres").val();
+        let year = $("#years").val();
+
+        let url = 'Movie/Category?Genre=' + genre
+        window.location.href = url;
+        console.log("geiaaaa");
+    }
+
+</script>
+@*================================================== Search Button End====================================================*@
+
