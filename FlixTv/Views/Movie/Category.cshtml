@@ -14,8 +14,8 @@
             <div class="col-12 col-xl-6">
                 <ul class="breadcrumb">
                     <li class="breadcrumb__item"><a href="@Url.Action("Index", "Home")">Home</a></li>
-                    <li class="breadcrumb__item"><a href="@Url.Action("Index", "Movie")">Movies</a></li>
-                    <li class="breadcrumb__item breadcrumb__item--active">Category</li>
+                    <li class="breadcrumb__item"><a href="@Url.Action("Index", "Movie")">Movie Categories</a></li>
+                    <li class="breadcrumb__item breadcrumb__item--active">@Model.Genre</li>
                 </ul>
             </div>
         </div>
@@ -38,7 +38,8 @@
     <script src="~/www/main/js/main.js"></script>
 
 
-   
+
+
 
 
 

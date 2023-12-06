@@ -1,52 +1,64 @@
-﻿<!-- Filters Bar -->
+﻿<style>
+    
+    #search-btn:hover{
+        color:blue;
+    }
+    #search-btn{
+        color:white;
+    }
+</style>
+
+<!-- Filters Bar -->
 <div class="catalog catalog--page catalog--list">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="catalog__nav catalog__nav--relative">
                     <div class="catalog__select-wrap">
-                        <select class="catalog__select" name="genres" id="genres">
-                            <option value="All genres">All genres</option>
-                            <option value="Action">Action</option>
-                            <option value="Adult">Adult</option>
-                            <option value="Adventure">Adventure</option>
-                            <option value="Biography">Biography</option>
-                            <option value="Comedy">Comedy</option>
-                            <option value="Crime">Crime</option>
-                            <option value="Documentary">Documentary</option>
-                            <option value="Drama">Drama</option>
-                            <option value="Family">Family</option>
-                            <option value="Fantasy">Fantasy</option>
-                            <option value="Game-Show">Game-Show</option>
-                            <option value="History">History</option>
-                            <option value="Horror">Horror</option>
-                            <option value="Music">Music</option>
-                            <option value="Musical">Musical</option>
-                            <option value="Mystery">Mystery</option>
-                            <option value="News">News</option>
-                            <option value="Reality-Tv">Reality-Tv</option>
-                            <option value="Romance">Romance</option>
-                            <option value="Sci-Fi">Sci-Fi</option>
-                            <option value="Short">Short</option>
-                            <option value="Sport">Sport</option>
-                            <option value="Talk-Show">Talk-Show</option>
-                            <option value="Thriller">Thriller</option>
-                            <option value="War">War</option>
-                            <option value="Western">Western</option>
-                        </select>
+                        <form action="https://localhost:44353/Movie/Category" method="get">
 
-                        <select class="catalog__select" name="years" id="years">
-                            <option value="All the years">All the years</option>
-                            <option value="1">'70s</option>
-                            <option value="'80s">'80s</option>
-                            <option value="3">'90s</option>
-                            <option value="4">2000-10</option>
-                            <option value="5">2010-20</option>
-                            <option value="6">2021</option>
-                        </select>
+                            <select class="catalog__select" name="Genre">
+                                <option value="All genres">All genres</option>
+                                <option value="Action">Action</option>
+                                <option value="Adventure">Adventure</option>
+                                <option value="Biography">Biography</option>
+                                <option value="Comedy">Comedy</option>
+                                <option value="Crime">Crime</option>
+                                <option value="Documentary">Documentary</option>
+                                <option value="Drama">Drama</option>
+                                <option value="Family">Family</option>
+                                <option value="Fantasy">Fantasy</option>
+                                <option value="Game-Show">Game-Show</option>
+                                <option value="History">History</option>
+                                <option value="Horror">Horror</option>
+                                <option value="Music">Music</option>
+                                <option value="Musical">Musical</option>
+                                <option value="Mystery">Mystery</option>
+                                <option value="News">News</option>
+                                <option value="Reality-Tv">Reality-Tv</option>
+                                <option value="Romance">Romance</option>
+                                <option value="Sci-Fi">Sci-Fi</option>
+                                <option value="Short">Short</option>
+                                <option value="Sport">Sport</option>
+                                <option value="Talk-Show">Talk-Show</option>
+                                <option value="Thriller">Thriller</option>
+                                <option value="War">War</option>
+                                <option value="Western">Western</option>
+                            </select>
 
+                            <select class="catalog__select" name="Year">
+                                <option value="All the years">All the years</option>
+                                <option value="1">'70s</option>
+                                <option value="2">'80s</option>
+                                <option value="3">'90s</option>
+                                <option value="4">2000-10</option>
+                                <option value="5">2010-20</option>
+                                <option value="6">2021</option>
+                            </select>
 
-                        <button id="search-btn">Search</button>
+                            <button id="search-btn" >Search</button>
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -54,19 +66,3 @@
     </div>
 </div>
 <!-- End Filters Bar -->
-@*================================================== Search Button Start====================================================*@
-<script>
-    $("#search-btn").click(apiCall);
-
-    function apiCall() {
-        let genre = $("#genres").val();
-        let year = $("#years").val();
-
-        let url = 'Movie/Category?Genre=' + genre
-        window.location.href = url;
-        console.log("geiaaaa");
-    }
-
-</script>
-@*================================================== Search Button End====================================================*@
-
