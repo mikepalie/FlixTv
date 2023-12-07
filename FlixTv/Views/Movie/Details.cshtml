@@ -22,5 +22,49 @@
 
 <script>
     $("#title").html("@Model.Title");
+    $("#synopsis").html("@Model.Synopsis");
+
+
+        /*---------------Ajax Start-----------------*/
+    $(document).ready(async function () {
+        let id = "@Model.MovieId";
+            let settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://ott-details.p.rapidapi.com/gettitleDetails?imdbid=" + id,
+                "method": "GET",
+                "timeout": 0,
+                "headers": {
+                    "X-RapidAPI-Key": "3564570957msh024c72c33e69c52p1ee450jsna15c77966f6d",
+                    "X-RapidAPI-Host": "ott-details.p.rapidapi.com"
+                }
+            };
+
+            await $.ajax(settings).done(function (response) {
+                addDetails(response);
+
+            });
+
+        });
+        /*--------------- Ajax End-----------------*/
+
+        /*---------------------Add Details Start-------------------------*/
+
+        function addDetails(details) {
+
+                let rating = details.imdbrating ?? "unrated";
+                let genre = details.genre;
+                let releaseYear = details.released;
+                let duration = details.runtime ?? "min";
+            let url = details.imageurl[0];
+            console.log("helllllllooooo");
+            console.log(url);
+            $("#rating").html(rating);
+            $("#genre").html(genre);
+            $("#year").html(releaseYear);
+            $("#duration").html(duration);
+            @*$("#image").attr("data-bg",@Html.Raw("https://m.media-amazon.com/images/M/MV5BZTBlOTczMzctY2QzYi00OGI0LTk3MTYtM2NjMzA1N2MwYjAyXkEyXkFqcGdeQXVyNjk1MTU4ODI@._V1_UX182_CR0,0,182,268_AL_.jpg"  );*@
+        };
+        /*---------------------Add Details End-------------------------*/
 
 </script>
