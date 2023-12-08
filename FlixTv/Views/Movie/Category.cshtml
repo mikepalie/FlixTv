@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-xl-6">
-                <h1 class="section__title section__title--head">Results for : @Model.Genre, @Model.Year</h1>
+                <h1 class="section__title section__title--head">Results for : @Model.Genre,<a id="years">@Model.Year</a> </h1>
             </div>
 
             <div class="col-12 col-xl-6">
@@ -39,21 +39,43 @@
 
 
 
-
-
-
-
-
-
     @*================================================== Category grid Start====================================================*@
-    <script type="text/javascript">
+<script type="text/javascript">
+        let genre = "@Model.Genre";
+        let year = "@Model.Year";
+        let startYear,endYear;
+
+        if (genre == "AllGenres") { genre = "" };
+
+    if (year == "AllYears") {
+        startYear = "";
+        endYear = "";
+    } else if (parseInt(year) == 2022 || parseInt(year) == 2021) {
+        startYear = parseInt(year);
+        endYear = parseInt(year);
+        $("#years").html(startYear);
+    } else if (parseInt(year) == 20100 || parseInt(year) == 20000 || parseInt(year) == 19900 || parseInt(year) == 19800 || parseInt(year) == 19700) {
+        startYear = parseInt(year)/10;
+        endYear = parseInt(year)/10 + 9;
+        $("#years").html("Best of " + startYear + "'s");
+    } else {
+        startYear = parseInt(year);
+        endYear = parseInt(year);
+        $("#years").html(startYear);
+    }
+
+    
+
+
+
 
         /*---------------Ajax Start-----------------*/
         $(document).ready(async function () {
             let settings = {
                 "async": true,
                 "crossDomain": true,
-                "url": "https://ott-details.p.rapidapi.com/advancedsearch?genre=" + "@Model.Genre" + "&type=movie",
+                "url": `https://ott-details.p.rapidapi.com/advancedsearch?start_year=${startYear}&end_year=${endYear}&min_imdb=5&max_imdb=10
+                        &genre=${genre}&type=movie&sort=highestrated`,
                 "method": "GET",
                 "timeout": 0,
                 "headers": {
@@ -64,6 +86,8 @@
 
             await $.ajax(settings).done(function (response1) {
                 let movies = response1.results;
+                console.log("helloooooo");
+                console.log(movies);
                 addMovies(movies);
 
             });
@@ -141,7 +165,7 @@
             $("#categoryGrid").append(element);
         }
                 /*-----------------------Add MovieCard To Carousel  End---------------------*/
-    </script>
+</script>
     @*================================================== Category Grid End====================================================*@
 
 }
