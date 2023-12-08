@@ -11,5 +11,9 @@ namespace FlixTv.Models
         public string Genre { get; set; }
 
         public string Year { get; set; }
+
+        public string MinRating { get; set; }
+        public string MaxRating { get; set; }
+        public string SortingBy { get; set; }
     }
 }

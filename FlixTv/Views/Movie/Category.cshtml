@@ -8,7 +8,12 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-xl-6">
-                <h1 class="section__title section__title--head">Results for : @Model.Genre,<a id="years">@Model.Year</a> </h1>
+                <h1 class="section__title section__title--head">Results for : @Model.Genre,
+                <a id="years">@Model.Year</a>
+                <a id="years">MinRating @Model.MinRating</a>
+                <a id="years">MaxRating @Model.MaxRating</a>
+                <a id="years">Sorting By @Model.SortingBy</a>
+                </h1>
             </div>
 
             <div class="col-12 col-xl-6">
@@ -43,8 +48,10 @@
 <script type="text/javascript">
         let genre = "@Model.Genre";
         let year = "@Model.Year";
-        let startYear,endYear;
-
+        let startYear, endYear;
+        let minRating = "@Model.MinRating";
+        let maxRating = "@Model.MaxRating";
+        let sortingby = "@Model.SortingBy";
         if (genre == "AllGenres") { genre = "" };
 
     if (year == "AllYears") {
@@ -74,8 +81,8 @@
             let settings = {
                 "async": true,
                 "crossDomain": true,
-                "url": `https://ott-details.p.rapidapi.com/advancedsearch?start_year=${startYear}&end_year=${endYear}&min_imdb=5&max_imdb=10
-                        &genre=${genre}&type=movie&sort=highestrated`,
+                "url": `https://ott-details.p.rapidapi.com/advancedsearch?start_year=${startYear}&end_year=${endYear}&min_imdb=${minRating}&max_imdb=${maxRating}
+                        &genre=${genre}&type=movie&sort=${sortingby}`,
                 "method": "GET",
                 "timeout": 0,
                 "headers": {
@@ -86,7 +93,7 @@
 
             await $.ajax(settings).done(function (response1) {
                 let movies = response1.results;
-                console.log("helloooooo");
+                console.log("geiaaaaaaaa");
                 console.log(movies);
                 addMovies(movies);
 

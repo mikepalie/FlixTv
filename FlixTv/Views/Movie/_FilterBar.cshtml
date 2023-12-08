@@ -16,7 +16,7 @@
                 <div class="catalog__nav catalog__nav--relative">
                     <div class="catalog__select-wrap">
                         <form action="https://localhost:44353/Movie/Category" method="get">
-
+                            @*------------------Select Genre Start--------------*@
                             <select class="catalog__select" name="Genre">
                                 <option value="AllGenres">All genres</option>
                                 <option value="Action">Action</option>
@@ -45,7 +45,10 @@
                                 <option value="War">War</option>
                                 <option value="Western">Western</option>
                             </select>
+                            @*------------------Select Genre Start--------------*@
 
+
+                            @*------------------Select Year Start--------------*@
                             <select class="catalog__select" name="Year">
                                 <option value="AllYears">All the years</option>
                                 <option value="2022">Best of 2022</option>
@@ -105,10 +108,45 @@
                                 <option value="1972">1972</option>
                                 <option value="1971">1971</option>
                                 <option value="1970">1970</option>
-                                
+
+                            </select>
+                            @*------------------Select Year End--------------*@
+
+                            <select class="catalog__select" name="MinRating">
+                                <option value="">MinRating</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
                             </select>
 
-                           
+                            <select class="catalog__select" name="MaxRating">
+                                <option value="">MaxRating</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+
+                            <select class="catalog__select" name="SortingBy">
+                                <option value="">Sorting By</option>
+                                <option value="latest">Latest</option>
+                                <option value="oldest">Oldest</option>
+                                <option value="highestrated">highest Rated</option>
+                                <option value="lowestrated">Lowest Rated</option>
+                            </select>
 
                             <button id="search-btn">Search</button>
                         </form>
