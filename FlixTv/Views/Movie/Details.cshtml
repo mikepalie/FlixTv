@@ -17,53 +17,60 @@
     <script src="~/www/main/js/jquery.magnific-popup.min.js"></script>
     <script src="~/www/main/js/plyr.min.js"></script>
     <script src="~/www/main/js/main.js"></script>
-}
 
-<script>
-    $("#title").html("@Model.Title");
-    $("#synopsis").html("@Model.Synopsis");
+    @*------------------------Add Movie Information Start-----------------------------*@
+    <script>
+        
+        $("#synopsis").html("@Model.Synopsis");
 
 
-        /*---------------Ajax Start-----------------*/
-    $(document).ready(async function () {
-        let id = "@Model.MovieId";
-            let settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "https://ott-details.p.rapidapi.com/gettitleDetails?imdbid=" + id,
-                "method": "GET",
-                "timeout": 0,
-                "headers": {
-                    "X-RapidAPI-Key": "3564570957msh024c72c33e69c52p1ee450jsna15c77966f6d",
-                    "X-RapidAPI-Host": "ott-details.p.rapidapi.com"
-                }
-            };
+            /*---------------Ajax Start-----------------*/
+        $(document).ready(async function () {
 
-            await $.ajax(settings).done(function (response) {
-                addDetails(response);
+                let id = "@Model.MovieId";
+                let settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": "https://ott-details.p.rapidapi.com/gettitleDetails?imdbid=" + id,
+                    "method": "GET",
+                    "timeout": 0,
+                    "headers": {
+                        "X-RapidAPI-Key": "3564570957msh024c72c33e69c52p1ee450jsna15c77966f6d",
+                        "X-RapidAPI-Host": "ott-details.p.rapidapi.com"
+                    }
+                };
+
+                await $.ajax(settings).done(function (response) {
+                    addDetails(response);
+
+                });
 
             });
+            /*--------------- Ajax End-----------------*/
 
-        });
-        /*--------------- Ajax End-----------------*/
+            /*---------------------Add Details Start-------------------------*/
 
-        /*---------------------Add Details Start-------------------------*/
-
-        function addDetails(details) {
-
-                let rating = details.imdbrating ?? "unrated";
-                let genre = details.genre;
-                let releaseYear = details.released;
+            function addDetails(details) {
+                    let title = details.title;
+                    let rating = details.imdbrating ?? "unrated";
+                    let genre = details.genre;
+                    let releaseYear = details.released;
                 let duration = details.runtime ?? "min";
-                let url = details.imageurl[0];
+                console.log(title);
+                    let url = details.imageurl[0];
 
-                $("#rating").html(rating);
-                $("#genre").html(genre);
-                $("#year").html(releaseYear);
-            $("#duration").html(duration);
-            $("#image").css("background", `url(${url}&quot;)`);
-        
-        };
-        /*---------------------Add Details End-------------------------*/
+                    $("#title").html(title);
+                    $("#rating").html(rating);
+                    $("#genre").html(genre);
+                    $("#year").html(releaseYear);
+                    $("#duration").html(duration);
+                    $("#image").css("background", `url(${url}&quot;)`);
 
-</script>
+            };
+            /*---------------------Add Details End-------------------------*/
+
+    </script>
+    @*------------------------Add Movie Information End-----------------------------*@
+
+}
+
