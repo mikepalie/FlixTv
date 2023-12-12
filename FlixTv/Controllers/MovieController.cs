@@ -21,7 +21,7 @@ namespace FlixTv.Controllers
         
         public ActionResult Category(string Genre, string Year, string MinRating, string MaxRating, string SortingBy)
         {
-            Category cat = new Category() { Genre = Genre, Year = Year, MinRating = MinRating, MaxRating= MaxRating, SortingBy= SortingBy };
+            Category cat = new Category() { Genre = Genre, Year = Year, MinRating = MinRating, MaxRating = MaxRating, SortingBy = SortingBy };
             return View(cat);
         }
 

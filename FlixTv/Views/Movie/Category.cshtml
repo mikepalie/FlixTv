@@ -8,11 +8,12 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-xl-6">
-                <h1 class="section__title section__title--head">Results for : @Model.Genre,
-                <a id="years">@Model.Year</a>
-                <a id="years">MinRating @Model.MinRating</a>
-                <a id="years">MaxRating @Model.MaxRating</a>
-                <a id="years">Sorting By @Model.SortingBy</a>
+                <h1 class="section__title section__title--head">Results for :
+                <a id="genre"></a>
+                <a id="years"></a>
+                <a id="minRating"></a>
+                <a id="maxRating"></a>
+                <a id="sortingBy"></a>
                 </h1>
             </div>
 
@@ -46,43 +47,66 @@
 
     @*================================================== Category grid Start====================================================*@
 <script type="text/javascript">
+
         let genre = "@Model.Genre";
         let year = "@Model.Year";
         let startYear, endYear;
         let minRating = "@Model.MinRating";
         let maxRating = "@Model.MaxRating";
         let sortingby = "@Model.SortingBy";
-        if (genre == "AllGenres") { genre = "" };
 
+    /*-----------Genre Start----------------*/
+    if (genre == "AllGenres") {
+        genre = ""
+        $("#genre").html("All Genres -");
+    } else {
+        $("#genre").html(genre + " -");
+    };
+    /*-----------Genre Start----------------*/
+
+    /*-----------Years Start----------------*/
     if (year == "AllYears") {
+
         startYear = "";
         endYear = "";
+        $("#years").html(year + " -");
+
     } else if (parseInt(year) == 2022 || parseInt(year) == 2021) {
+
         startYear = parseInt(year);
         endYear = parseInt(year);
-        $("#years").html(startYear);
+        $("#years").html(startYear + " -");
+
     } else if (parseInt(year) == 20100 || parseInt(year) == 20000 || parseInt(year) == 19900 || parseInt(year) == 19800 || parseInt(year) == 19700) {
-        startYear = parseInt(year)/10;
+
+        startYear = parseInt(year) / 10;
         endYear = parseInt(year)/10 + 9;
-        $("#years").html("Best of " + startYear + "'s");
+        $("#years").html("Best of " + startYear + "'s -");
+
     } else {
+
         startYear = parseInt(year);
         endYear = parseInt(year);
-        $("#years").html(startYear);
+        $("#years").html(startYear + " -");
     }
+    /*-----------Years End----------------*/
 
-    
+    if (minRating != "") { $("#minRating").html("MinRating: " + minRating + " -") }           //MinRating
+    if (maxRating != "") { $("#maxRating").html("MaxRating: " + maxRating + " -") }           //MaxRating 
 
+
+    if (sortingby != "") { $("#sortingBy").html(sortingby) }    //Sorting By
 
 
 
         /*---------------Ajax Start-----------------*/
-        $(document).ready(async function () {
+    $(document).ready(async function () {
+
             let settings = {
                 "async": true,
                 "crossDomain": true,
-                "url": `https://ott-details.p.rapidapi.com/advancedsearch?start_year=${startYear}&end_year=${endYear}&min_imdb=${minRating}&max_imdb=${maxRating}
-                        &genre=${genre}&type=movie&sort=${sortingby}`,
+                "url": `https://ott-details.p.rapidapi.com/advancedsearch?start_year=${startYear}&end_year=${endYear}&genre=${genre}&type=movie&min_imdb=${minRating}
+                        &max_imdb=${maxRating}&sort=${sortingby}`,
                 "method": "GET",
                 "timeout": 0,
                 "headers": {
@@ -91,12 +115,10 @@
                 }
             };
 
-            await $.ajax(settings).done(function (response1) {
-                let movies = response1.results;
-                console.log("geiaaaaaaaa");
-                console.log(movies);
-                addMovies(movies);
+        await $.ajax(settings).done(function (response1) {
 
+                let movies = response1.results;
+                addMovies(movies);
             });
 
         });
@@ -148,7 +170,7 @@
 
 
 
-        /*-----------------------Add MovieCard To Carousel Start---------------------*/
+        /*-----------------------Add MovieCard To Grid Start---------------------*/
         function addMovieToGrid(id,imageUrl, title, genre, releaseYear, rating, synopsis) {
             let element = `<div class="col-12 col-md-6 col-xl-4">
                                     <div class="card card--big">
@@ -171,7 +193,7 @@
 
             $("#categoryGrid").append(element);
         }
-                /*-----------------------Add MovieCard To Carousel  End---------------------*/
+                /*-----------------------Add MovieCard To Grid End---------------------*/
 </script>
     @*================================================== Category Grid End====================================================*@
 
