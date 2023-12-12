@@ -14,6 +14,7 @@
                 <a id="minRating"></a>
                 <a id="maxRating"></a>
                 <a id="sortingBy"></a>
+                <a id="noFiltering"></a>
                 </h1>
             </div>
 
@@ -48,55 +49,66 @@
     @*================================================== Category grid Start====================================================*@
 <script type="text/javascript">
 
-        let genre = "@Model.Genre";
-        let year = "@Model.Year";
-        let startYear, endYear;
-        let minRating = "@Model.MinRating";
-        let maxRating = "@Model.MaxRating";
-        let sortingby = "@Model.SortingBy";
+    let genre = "@Model.Genre";
+    let year = "@Model.Year";
+    let minRating = "@Model.MinRating";
+    let maxRating = "@Model.MaxRating";
+    let sortingby = "@Model.SortingBy";
+    let startYear, endYear;
+    let noFiltering = true;
 
     /*-----------Genre Start----------------*/
-    if (genre == "AllGenres") {
-        genre = ""
-        $("#genre").html("All Genres -");
-    } else {
+    if (genre != "") {
         $("#genre").html(genre + " -");
-    };
+        noFiltering = false;
+    }
     /*-----------Genre Start----------------*/
 
     /*-----------Years Start----------------*/
-    if (year == "AllYears") {
-
+    if (year == "") {
         startYear = "";
         endYear = "";
-        $("#years").html(year + " -");
 
     } else if (parseInt(year) == 2022 || parseInt(year) == 2021) {
 
         startYear = parseInt(year);
         endYear = parseInt(year);
         $("#years").html(startYear + " -");
+        noFiltering = false;
 
     } else if (parseInt(year) == 20100 || parseInt(year) == 20000 || parseInt(year) == 19900 || parseInt(year) == 19800 || parseInt(year) == 19700) {
 
         startYear = parseInt(year) / 10;
         endYear = parseInt(year)/10 + 9;
         $("#years").html("Best of " + startYear + "'s -");
+        noFiltering = false;
 
-    } else {
+    } else{
 
         startYear = parseInt(year);
         endYear = parseInt(year);
         $("#years").html(startYear + " -");
+        noFiltering = false;
     }
     /*-----------Years End----------------*/
 
-    if (minRating != "") { $("#minRating").html("MinRating: " + minRating + " -") }           //MinRating
-    if (maxRating != "") { $("#maxRating").html("MaxRating: " + maxRating + " -") }           //MaxRating 
+    if (minRating != "") {
+        $("#minRating").html("MinRating: " + minRating + " -")           //minRating
+        noFiltering = false;
+    }          
+    if (maxRating != "") {
+        $("#maxRating").html("MaxRating: " + maxRating + " -")          //maxRating
+        noFiltering = false;
+    }           
 
+    if (sortingby != "") {
+        $("#sortingBy").html(sortingby)                                 //sortingBy
+        noFiltering = false;
+    }    
 
-    if (sortingby != "") { $("#sortingBy").html(sortingby) }    //Sorting By
-
+    if (noFiltering) {
+        $("#noFiltering").html("No Filtering");                         //NoFiltering Case
+    }
 
 
         /*---------------Ajax Start-----------------*/
