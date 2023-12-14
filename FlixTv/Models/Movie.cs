@@ -9,5 +9,6 @@ namespace FlixTv.Models
     {
         public string MovieId { get; set; }
         public string Synopsis { get; set; }
+        public string Title { get; set; }
     }
 }

@@ -30,5 +30,11 @@ namespace FlixTv.Controllers
             Movie movie = new Movie() { MovieId = Id, Synopsis = Synopsis};
             return View(movie);
         }
+
+        public ActionResult Search(string Title)
+        {
+            Movie movie = new Movie() { Title = Title };
+            return View(movie);
+        }
     }
 }

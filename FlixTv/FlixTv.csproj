@@ -412,6 +412,7 @@
     <Content Include="Views\Movie\_CategoryResults.cshtml" />
     <Content Include="Views\Movie\_MovieDetails.cshtml" />
     <Content Include="Views\Movie\Details.cshtml" />
+    <Content Include="Views\Movie\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
