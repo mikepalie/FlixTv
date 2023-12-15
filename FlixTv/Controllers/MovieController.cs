@@ -25,9 +25,9 @@ namespace FlixTv.Controllers
             return View(cat);
         }
 
-        public ActionResult Details(string Id,string Synopsis)
+        public ActionResult Details(string Id)
         {
-            Movie movie = new Movie() { MovieId = Id, Synopsis = Synopsis};
+            Movie movie = new Movie() { MovieId = Id};
             return View(movie);
         }
 
