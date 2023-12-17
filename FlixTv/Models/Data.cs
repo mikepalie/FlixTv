@@ -5,9 +5,9 @@ using System.Web;
 
 namespace FlixTv.Models
 {
-    public class Result
+    public class Data
     {
         public int page { get; set; }
-        public List<MovieTest> results { get; set; }
+        public List<Movie> results { get; set; }
     }
 }

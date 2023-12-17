@@ -6,8 +6,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using PagedList.Mvc;
 using FlixTv.Repositories;
 using System.Threading.Tasks;
+using Filter = FlixTv.Models.Filter;
 
 namespace FlixTv.Controllers
 {
@@ -15,7 +17,7 @@ namespace FlixTv.Controllers
     {
         public ApplicationDbContext db = new ApplicationDbContext();
         
-        public TestService _testService = new TestService();
+        public MovieService _testService = new MovieService();
 
         
 
@@ -26,15 +28,21 @@ namespace FlixTv.Controllers
             return View();
         }
         
-        public ActionResult Category(string Genre, string Year, string MinRating, string MaxRating, string SortingBy                                 )
+        public async Task<ActionResult> Category(string Genre, string Year, string MinRating, string MaxRating, string SortingBy, int? page, int? pSize           )
         {
-            Category cat = new Category() { Genre = Genre, Year = Year, MinRating = MinRating, MaxRating = MaxRating, SortingBy = SortingBy };
-            return View(cat);
+            Filter filter = new Filter() { Genre = Genre, Year = Year, MinRating = MinRating, MaxRating = MaxRating, SortingBy = SortingBy };
+            var result = await _testService.GetMoviesWithFilters(filter);
+            var data = result.results;
+
+            int pageSize = pSize ?? 15;
+            int pageNumber = page ?? 1;
+
+            return View(data.ToPagedList(pageNumber, pageSize)  );
         }
 
         public ActionResult Details(string Id)
         {
-            Movie movie = new Movie() { MovieId = Id};
+            Movie movie = new Movie() { ImdbId = Id};
             return View(movie);
         }
 
@@ -43,12 +51,6 @@ namespace FlixTv.Controllers
             Movie movie = new Movie() { Title = Title };
             return View(movie);
         }
-        public async Task<ActionResult> Test(string genre, string minRating)
-        {
-            Category cat = new Category() { Genre = genre, MinRating = minRating };
-            var result = await _testService.GetMoviesWithFilters(cat);
-            var data = result.results; 
-            return View(data);
-        }
+        
     }
 }

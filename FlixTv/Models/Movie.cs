@@ -7,12 +7,13 @@ namespace FlixTv.Models
 {
     public class Movie
     {
-        public string MovieId { get; set; }
-        public string Synopsis { get; set; }
+        public string ImdbId { get; set; }
+        public List<string> ImageUrl { get; set; }
+        public List<string> Genre { get; set; }
         public string Title { get; set; }
-        public string Genre { get; set; }
-        public string MinRating { get; set; }
-         
-     
+        public double? ImdbRating { get; set; }
+        public int Released { get; set; }
+        public string Type { get; set; }
+        public string Synopsis { get; set; }
     }
 }

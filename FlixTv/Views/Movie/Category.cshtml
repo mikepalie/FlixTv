@@ -1,4 +1,7 @@
-﻿@model FlixTv.Models.Category
+﻿@using FlixTv.Models
+@model PagedList.IPagedList<FlixTv.Models.Movie>
+@using PagedList;
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Category";
@@ -8,13 +11,14 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-xl-6">
-                <h1 class="section__title section__title--head">Results for :
-                <a id="genre"></a>
-                <a id="years"></a>
-                <a id="minRating"></a>
-                <a id="maxRating"></a>
-                <a id="sortingBy"></a>
-                <a id="noFiltering"></a>
+                <h1 class="section__title section__title--head">
+                    Results for :
+                    <a id="genre"></a>
+                    <a id="years"></a>
+                    <a id="minRating"></a>
+                    <a id="maxRating"></a>
+                    <a id="sortingBy"></a>
+                    <a id="noFiltering"></a>
                 </h1>
             </div>
 
@@ -22,7 +26,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb__item"><a href="@Url.Action("Index", "Home")">Home</a></li>
                     <li class="breadcrumb__item"><a href="@Url.Action("Index", "Movie")">Movie Categories</a></li>
-                    <li class="breadcrumb__item breadcrumb__item--active">@Model.Genre</li>
+                    <li class="breadcrumb__item breadcrumb__item--active"></li>
                 </ul>
             </div>
         </div>
@@ -31,6 +35,10 @@
 <!-- end above filter bar -->
 @Html.Partial("~/Views/Movie/_FilterBar.cshtml")
 @Html.Partial("~/Views/Movie/_CategoryResults.cshtml")
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, x => Url.Action("Category", "Movie",new {page = x}))
+
 
 
 @section scripts{
@@ -49,106 +57,26 @@
     @*================================================== Category grid Start====================================================*@
 <script type="text/javascript">
 
-    let genre = "@Model.Genre";
-    let year = "@Model.Year";
-    let minRating = "@Model.MinRating";
-    let maxRating = "@Model.MaxRating";
-    let sortingby = "@Model.SortingBy";
-    let startYear, endYear;
-    let noFiltering = true;
-
-    /*-----------Genre Start----------------*/
-    if (genre != "") {
-        $("#genre").html(genre + " -");
-        noFiltering = false;
-    }
-    /*-----------Genre Start----------------*/
-
-    /*-----------Years Start----------------*/
-    if (year == "") {
-        startYear = "";
-        endYear = "";
-
-    } else if (parseInt(year) == 2022 || parseInt(year) == 2021) {
-
-        startYear = parseInt(year);
-        endYear = parseInt(year);
-        $("#years").html(startYear + " -");
-        noFiltering = false;
-
-    } else if (parseInt(year) == 20100 || parseInt(year) == 20000 || parseInt(year) == 19900 || parseInt(year) == 19800 || parseInt(year) == 19700) {
-
-        startYear = parseInt(year) / 10;
-        endYear = parseInt(year)/10 + 9;
-        $("#years").html("Best of " + startYear + "'s -");
-        noFiltering = false;
-
-    } else{
-
-        startYear = parseInt(year);
-        endYear = parseInt(year);
-        $("#years").html(startYear + " -");
-        noFiltering = false;
-    }
-    /*-----------Years End----------------*/
-
-    if (minRating != "") {
-        $("#minRating").html("MinRating: " + minRating + " -")           //minRating
-        noFiltering = false;
-    }          
-    if (maxRating != "") {
-        $("#maxRating").html("MaxRating: " + maxRating + " -")          //maxRating
-        noFiltering = false;
-    }           
-
-    if (sortingby != "") {
-        $("#sortingBy").html(sortingby)                                 //sortingBy
-        noFiltering = false;
-    }    
-
-    if (noFiltering) {
-        $("#noFiltering").html("No Filtering");                         //NoFiltering Case
-    }
+    var movies = @Html.Raw(Json.Encode(Model));
+    console.log("tainies : " + movies);
+    addMovies(movies);
 
 
-        /*---------------Ajax Start-----------------*/
-    $(document).ready(async function () {
 
-            let settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": `https://ott-details.p.rapidapi.com/advancedsearch?start_year=${startYear}&end_year=${endYear}&genre=${genre}&type=movie&min_imdb=${minRating}
-                        &max_imdb=${maxRating}&sort=${sortingby}`,
-                "method": "GET",
-                "timeout": 0,
-                "headers": {
-                    "X-RapidAPI-Key": "3564570957msh024c72c33e69c52p1ee450jsna15c77966f6d",
-                    "X-RapidAPI-Host": "ott-details.p.rapidapi.com"
-                }
-            };
-
-        await $.ajax(settings).done(function (response1) {
-            let movies = response1.results;
-            if (movies.length == 0){ $("#noResults").html("No Results Found!") };
-                addMovies(movies);
-            });
-
-        });
-        /*--------------- Ajax End-----------------*/
 
         /*---------------------Add Movies Start-------------------------*/
 
         async function addMovies(movies) {
             for (let movie of movies) {
-                let id = movie.imdbid;
-                let synopsis = movie.synopsis ?? "";
-                let releaseYear = movie.released;
-                let genre = movie.genre;
-                let title = movie.title;
-                let rating = movie.imdbrating ?? "unrated";
-                if (movie.imageurl == undefined) { continue; }      //Check for undifined Url
-                if (movie.imageurl[0] == null) { continue; }         // Check for null Img Url
-                let imageUrl = movie.imageurl[0];
+                let id = movie.ImdbId;
+                let synopsis = movie.Synopsis ?? "";
+                let releaseYear = movie.Released;
+                let genre = movie.Genre;
+                let title = movie.Title;
+                let rating = movie.ImdbRating ?? "unrated";
+                if (movie.ImageUrl == undefined) { continue; }      //Check for undifined Url
+                if (movie.ImageUrl[0] == null) { continue; }         // Check for null Img Url
+                let imageUrl = movie.ImageUrl[0];
 
                 await checkImage(id,imageUrl, title, genre, releaseYear, rating, synopsis);   // Check for valid Url
 

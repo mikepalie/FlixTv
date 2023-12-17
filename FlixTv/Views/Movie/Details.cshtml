@@ -27,7 +27,7 @@
             /*---------------Ajax for Details Start-----------------*/
         $(document).ready(async function () {
 
-                let id = "@Model.MovieId";
+                let id = "@Model.ImdbId";
                 let settings = {
                     "async": true,
                     "crossDomain": true,
@@ -50,8 +50,8 @@
 
         /*---------------------Add Details Start-------------------------*/
 
-        function addDetails(details) {
-                let id = "@Model.MovieId";
+            function addDetails(details) {
+                let id = "@Model.ImdbId";
                 let title = details.title;
                 let synopsis = details.synopsis;
                 let rating = details.imdbrating ?? "unrated";

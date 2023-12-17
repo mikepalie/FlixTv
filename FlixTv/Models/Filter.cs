@@ -6,9 +6,9 @@ using System.Web;
 
 namespace FlixTv.Models
 {
-    public class Category
+    public class Filter
     {
-        public int CategoryId { get; set; }
+        public int FilterId { get; set; }
         public string Genre { get; set; }
 
         public string Year { get; set; }
