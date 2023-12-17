@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace FlixTv.Models
@@ -15,5 +16,6 @@ namespace FlixTv.Models
         public string MinRating { get; set; }
         public string MaxRating { get; set; }
         public string SortingBy { get; set; }
+        
     }
 }

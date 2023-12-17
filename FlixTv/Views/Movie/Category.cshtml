@@ -128,7 +128,6 @@
             };
 
         await $.ajax(settings).done(function (response1) {
-
             let movies = response1.results;
             if (movies.length == 0){ $("#noResults").html("No Results Found!") };
                 addMovies(movies);

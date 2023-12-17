@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using FlixTv.Repositories;
+using System.Threading.Tasks;
 
 namespace FlixTv.Controllers
 {
@@ -12,6 +15,10 @@ namespace FlixTv.Controllers
     {
         public ApplicationDbContext db = new ApplicationDbContext();
         
+        public TestService _testService = new TestService();
+
+        
+
         // GET: Movie
         public ActionResult Index()
         {
@@ -19,7 +26,7 @@ namespace FlixTv.Controllers
             return View();
         }
         
-        public ActionResult Category(string Genre, string Year, string MinRating, string MaxRating, string SortingBy)
+        public ActionResult Category(string Genre, string Year, string MinRating, string MaxRating, string SortingBy                                 )
         {
             Category cat = new Category() { Genre = Genre, Year = Year, MinRating = MinRating, MaxRating = MaxRating, SortingBy = SortingBy };
             return View(cat);
@@ -35,6 +42,13 @@ namespace FlixTv.Controllers
         {
             Movie movie = new Movie() { Title = Title };
             return View(movie);
+        }
+        public async Task<ActionResult> Test(string genre, string minRating)
+        {
+            Category cat = new Category() { Genre = genre, MinRating = minRating };
+            var result = await _testService.GetMoviesWithFilters(cat);
+            var data = result.results; 
+            return View(data);
         }
     }
 }
