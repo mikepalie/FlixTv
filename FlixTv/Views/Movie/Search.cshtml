@@ -3,12 +3,81 @@
     ViewBag.Title = "SearchView";
 }
 
-@Html.Partial("~/Views/Movie/_CategoryResults.cshtml")
+<!-- catalog -->
+<div class="catalog catalog--page catalog--list">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <h1 id="searchFor" style="color:white"></h1>
+                <h1 id="noResults" style="color:white"></h1>
+                <div class="row row--grid" id="categoryGrid">
+                    <!---------Here renders the data--------->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="catalog__paginator-wrap">
+                    <span id="pagesCatalog" class="catalog__pages">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span>
+                    @*=============================== Pagination Start ================================================*@
+                    <ul class="catalog__paginator">
+                        <li>
+                            @if (Model.PageNumber == 1)
+                            {
+                                <a href="#">
+                                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.75 5.36475L13.1992 5.36475" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M5.771 10.1271L0.749878 5.36496L5.771 0.602051" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="https://localhost:44353/Movie/Search?Title=@ViewBag.Search&page=@(Model.PageNumber - 1)">
+                                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.75 5.36475L13.1992 5.36475" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M5.771 10.1271L0.749878 5.36496L5.771 0.602051" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                                </a>
+                            }
+
+                        </li>
+                        @for (int i = 1; i <= Model.PageCount; i++)
+                        {
+                            if (Model.PageNumber == i)
+                            {
+                                <li class="active"><a href="https://localhost:44353/Movie/Search?Title=@ViewBag.Search&page=@i">@i</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="https://localhost:44353/Movie/Search?Title=@ViewBag.Search&page=@i">@i</a></li>
+                            }
+                        }
+                        <li>
+                            @if (Model.PageNumber == Model.PageCount)
+                            {
+                                <a href="#">
+                                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.1992 5.3645L0.75 5.3645" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M8.17822 0.602051L13.1993 5.36417L8.17822 10.1271" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="https://localhost:44353/Movie/Search?Title=@ViewBag.Search&page=@(Model.PageNumber + 1)">
+                                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.1992 5.3645L0.75 5.3645" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M8.17822 0.602051L13.1993 5.36417L8.17822 10.1271" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                                </a>
+                            }
+
+                        </li>
+                    </ul>
+                    @*=============================== Pagination End ================================================*@
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end catalog -->
+
 
 
 
 @section scripts{
-
     <script src="~/www/main/js/jquery-3.5.1.min.js"></script>
     <script src="~/www/main/js/bootstrap.bundle.min.js"></script>
     <script src="~/www/main/js/owl.carousel.min.js"></script>
@@ -19,89 +88,37 @@
     <script src="~/www/main/js/plyr.min.js"></script>
     <script src="~/www/main/js/main.js"></script>
 
-    <script type="text/javascript">
-    /*---------------Ajax Start-----------------*/
-    $(document).ready(async function () {
-        let title = "@Model.Title";
-        
-        let settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": `https://ott-details.p.rapidapi.com/search?title=${title}&page=1`,
-            "method": "GET",
-            "timeout": 0,
-            "headers": {
-                "X-RapidAPI-Key": "3564570957msh024c72c33e69c52p1ee450jsna15c77966f6d",
-                "X-RapidAPI-Host": "ott-details.p.rapidapi.com"
-            }
-        };
-        if (title == "") {
 
-            $("#noResults").html("No Results Found");
+
+
+
+    @*================================================== Add Movies To Grid Start====================================================*@
+    <script type="text/javascript">
+
+        var movies = @Html.Raw(Json.Encode(Model));
+        $("#searchFor").html("You searched for : #@ViewBag.Search");
+
+        if (movies == "") {
+
+            $("#noResults").html("No Results Found!")
 
         } else {
-            await $.ajax(settings).done(function (response1) {
 
-                let movies = response1.results;
-                if (movies.length == 0) { $("#noResults").html("No Results Found!") };
-                addMovies(movies);
-            });
-
-        }
-       
-
-    });
-    /*--------------- Ajax End-----------------*/
-
-    /*---------------------Add Movies Start-------------------------*/
-
-    async function addMovies(movies) {
-        for (let movie of movies) {
-            let id = movie.imdbid;
-            let synopsis = movie.synopsis ?? "";
-            let releaseYear = movie.released;
-            let genre = movie.genre;
-            let title = movie.title;
-            let rating = movie.imdbrating ?? "unrated";
-            if (movie.imageurl == undefined) { continue; }      //Check for undifined Url
-            if (movie.imageurl[0] == null) { continue; }         // Check for null Img Url
-            let imageUrl = movie.imageurl[0];
-
-            await checkImage(id, imageUrl, title, genre, releaseYear, rating, synopsis);   // Check for valid Url
-
+            addMovies(movies);
         }
 
+        async function addMovies(movies) {                         // Add MovieCard to Grid
+            for (let movie of movies) {
 
-    };
-    /*---------------------Add Movies End-------------------------*/
+                let id = movie.ImdbId;
+                let synopsis = movie.Synopsis ?? "";
+                let releaseYear = movie.Released;
+                let genre = movie.Genre;
+                let title = movie.Title;
+                let rating = movie.ImdbRating ?? "unrated";
+                let imageUrl = movie.ImageUrl[0];
 
-
-
-    /*----------------Check if Image Url is Ok Start -------------------*/
-
-    async function checkImage(id, url, title, genre, releaseYear, rating, synopsis) {
-        let settings2 = {
-            "url": url,
-            "method": "GET",
-            "timeout": 0,
-        };
-
-
-        await $.ajax(settings2).done(function (response) {
-
-            addMovieToGrid(id, url, title, genre, releaseYear, rating, synopsis);
-
-        }).catch(function (error) {
-
-        })
-    };
-    /*----------------Check if Image Url is Ok End -------------------*/
-
-
-
-    /*-----------------------Add MovieCard To Grid Start---------------------*/
-    function addMovieToGrid(id, imageUrl, title, genre, releaseYear, rating, synopsis) {
-        let element = `<div class="col-12 col-md-6 col-xl-4">
+                let element = `<div class="col-12 col-md-6 col-xl-4">
                                     <div class="card card--big">
                                         <a href="/Movie/Details?Id=${id}&Synopsis=${synopsis}" class="card__cover">
                                             <img src="${imageUrl}" alt="">
@@ -119,13 +136,14 @@
                                     </div>
                             </div>`;
 
-        $("#categoryGrid").append(element);
-    }
-                /*-----------------------Add MovieCard To Grid End---------------------*/
+                $("#categoryGrid").append(element);
+
+            }
+
+        };
+
     </script>
-
-
-
+    @*================================================== Add Movies To Grid End====================================================*@
 }
 
 

@@ -12,20 +12,19 @@
             <div class="col-12 col-xl-6">
                 <h1 class="section__title section__title--head">
                     Results for :
-                    <a id="genre"></a>
-                    <a id="years"></a>
-                    <a id="minRating"></a>
-                    <a id="maxRating"></a>
-                    <a id="sortingBy"></a>
-                    <a id="noFiltering"></a>
+                    <a id="genre">@(ViewBag.Genre != "" ? "#" + ViewBag.Genre : "")</a>
+                    <a id="years">@(ViewBag.Year != "" ? "#" + ViewBag.Year : "")</a>
+                    <a id="minRating">@(ViewBag.MinRating != "" ? "#MinRating: " + ViewBag.MinRating : "")</a>
+                    <a id="maxRating">@(ViewBag.MaxRating != "" ? "#MaxRating: " + ViewBag.MaxRating : "")</a>
+                    <a id="sortingBy">@(ViewBag.SortingBy != "" ? "#" + ViewBag.SortingBy : "")</a>
+                    <a id="noFiltering">@(ViewBag.Genre == "" && ViewBag.Year == "" && ViewBag.MinRating == "" && ViewBag.MaxRating == "" && ViewBag.Sortingby == "" ? "#NoFiltering" : "")</a>
                 </h1>
             </div>
 
             <div class="col-12 col-xl-6">
                 <ul class="breadcrumb">
                     <li class="breadcrumb__item"><a href="@Url.Action("Index", "Home")">Home</a></li>
-                    <li class="breadcrumb__item"><a href="@Url.Action("Index", "Movie")">Movie Categories</a></li>
-                    <li class="breadcrumb__item breadcrumb__item--active"></li>
+                    <li class="breadcrumb__item"><a href="@Url.Action("Index", "Movie")">Movies</a></li>
                 </ul>
             </div>
         </div>
@@ -50,68 +49,49 @@
     <script src="~/www/main/js/plyr.min.js"></script>
     <script src="~/www/main/js/main.js"></script>
 
- 
+    <script type="text/javascript">
+        if (@ViewBag.Year == 19700) {
+            $("#years").html("#70's");
+        } else if (@ViewBag.Year == 19800) {
+            $("#years").html("#80's");
+        }else if (@ViewBag.Year == 19900) {
+            $("#years").html("#90's");
+        }else if (@ViewBag.Year == 20000) {
+            $("#years").html("#Best of 2000-2010");
+        }else if (@ViewBag.Year == 20100) {
+            $("#years").html("#Best of 2010-2020");
+        }
+
+    </script>
 
 
-    @*================================================== Category grid Start====================================================*@
+
+    @*================================================== Add Movies To Grid Start====================================================*@
     <script type="text/javascript">
 
-    var movies = @Html.Raw(Json.Encode(Model));
-    console.log("tainies : " + movies);
-    addMovies(movies);
+        var movies = @Html.Raw(Json.Encode(Model));
+        if (movies == "") {
 
+            $("#noResults").html("No Results Found!")
 
+        } else {
 
+            addMovies(movies);
 
-        /*---------------------Add Movies Start-------------------------*/
+        }
 
-        async function addMovies(movies) {
+        async function addMovies(movies) {                         // Add MovieCard to Grid 
             for (let movie of movies) {
+
                 let id = movie.ImdbId;
                 let synopsis = movie.Synopsis ?? "";
                 let releaseYear = movie.Released;
                 let genre = movie.Genre;
                 let title = movie.Title;
                 let rating = movie.ImdbRating ?? "unrated";
-                if (movie.ImageUrl == undefined) { continue; }      //Check for undifined Url
-                if (movie.ImageUrl[0] == null) { continue; }         // Check for null Img Url
                 let imageUrl = movie.ImageUrl[0];
 
-                await checkImage(id,imageUrl, title, genre, releaseYear, rating, synopsis);   // Check for valid Url
-
-            }
-
-
-        };
-        /*---------------------Add Movies End-------------------------*/
-
-
-
-        /*----------------Check if Image Url is Ok Start -------------------*/
-
-        async function checkImage(id,url, title, genre, releaseYear, rating, synopsis) {
-            let settings2 = {
-                "url": url,
-                "method": "GET",
-                "timeout": 0,
-            };
-
-
-            await $.ajax(settings2).done(function (response) {
-
-                addMovieToGrid(id,url, title, genre, releaseYear, rating, synopsis);
-
-            }).catch(function (error) {
-
-            })
-        };
-        /*----------------Check if Image Url is Ok End -------------------*/
-
-
-
-        /*-----------------------Add MovieCard To Grid Start---------------------*/
-        function addMovieToGrid(id,imageUrl, title, genre, releaseYear, rating, synopsis) {
-            let element = `<div class="col-12 col-md-6 col-xl-4">
+                let element = `<div class="col-12 col-md-6 col-xl-4">
                                     <div class="card card--big">
                                         <a href="/Movie/Details?Id=${id}&Synopsis=${synopsis}" class="card__cover">
                                             <img src="${imageUrl}" alt="">
@@ -129,12 +109,14 @@
                                     </div>
                             </div>`;
 
-            $("#categoryGrid").append(element);
-        }
-                /*-----------------------Add MovieCard To Grid End---------------------*/
-    </script>
-    @*================================================== Category Grid End====================================================*@
+                $("#categoryGrid").append(element);
 
+            }
+
+        };
+        
+    </script>
+    @*================================================== Add Movies To Grid End====================================================*@
 }
 
 

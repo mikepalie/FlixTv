@@ -28,7 +28,7 @@ namespace FlixTv.Controllers
             return View();
         }
         
-        public async Task<ActionResult> Category(string Genre, string Year, string MinRating, string MaxRating, string SortingBy, int? page, int? pSize           )
+        public async Task<ActionResult> Category(string Genre, string Year, string MinRating, string MaxRating, string SortingBy, int? page, int? pSize )
         {
             ViewBag.Genre = Genre;
             ViewBag.Year = Year;
@@ -39,8 +39,9 @@ namespace FlixTv.Controllers
             Filter filter = new Filter() { Genre = Genre, Year = Year, MinRating = MinRating, MaxRating = MaxRating, SortingBy = SortingBy };
             var result = await _testService.GetMoviesWithFilters(filter);
             var data = result.results;
+            
 
-            int pageSize = pSize ?? 15;
+            int pageSize = pSize ?? 18;
             int pageNumber = page ?? 1;
 
             return View(data.ToPagedList(pageNumber, pageSize)  );
@@ -52,10 +53,17 @@ namespace FlixTv.Controllers
             return View(movie);
         }
 
-        public ActionResult Search(string Title)
+        public async Task<ActionResult> Search(string Title, int? page, int? pSize)
         {
-            Movie movie = new Movie() { Title = Title };
-            return View(movie);
+            ViewBag.Search = Title;
+            var result = await _testService.GetMoviesWithSearchingTitle(Title);
+            var data = result.results;
+
+
+            int pageSize = pSize ?? 18;
+            int pageNumber = page ?? 1;
+
+            return View(data.ToPagedList(pageNumber, pageSize));
         }
         
     }
