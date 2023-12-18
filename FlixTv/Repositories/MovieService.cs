@@ -55,10 +55,10 @@ namespace FlixTv.Repositories
 
             if (response.IsSuccessStatusCode)
             {
-                // Read the response data
+                // Read the response 
                 string responseData = await response.Content.ReadAsStringAsync();
                 
-                // Process the response data and deserialize it into a List<Movie>
+                // Process the response data and deserialize it into an object of type Data 
                 var data = JsonConvert.DeserializeObject<Data>(responseData);
 
                 return data ;

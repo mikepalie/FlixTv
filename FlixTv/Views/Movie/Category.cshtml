@@ -1,7 +1,6 @@
 ﻿@using FlixTv.Models
 @model PagedList.IPagedList<FlixTv.Models.Movie>
-@using PagedList;
-@using PagedList.Mvc;
+
 
 @{
     ViewBag.Title = "Category";
@@ -36,8 +35,7 @@
 @Html.Partial("~/Views/Movie/_FilterBar.cshtml")
 @Html.Partial("~/Views/Movie/_CategoryResults.cshtml")
 
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, x => Url.Action("Category", "Movie",new {page = x}))
+
 
 
 
@@ -52,10 +50,11 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
     <script src="~/www/main/js/plyr.min.js"></script>
     <script src="~/www/main/js/main.js"></script>
 
+ 
 
 
     @*================================================== Category grid Start====================================================*@
-<script type="text/javascript">
+    <script type="text/javascript">
 
     var movies = @Html.Raw(Json.Encode(Model));
     console.log("tainies : " + movies);
@@ -133,7 +132,7 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
             $("#categoryGrid").append(element);
         }
                 /*-----------------------Add MovieCard To Grid End---------------------*/
-</script>
+    </script>
     @*================================================== Category Grid End====================================================*@
 
 }

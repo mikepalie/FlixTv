@@ -30,6 +30,12 @@ namespace FlixTv.Controllers
         
         public async Task<ActionResult> Category(string Genre, string Year, string MinRating, string MaxRating, string SortingBy, int? page, int? pSize           )
         {
+            ViewBag.Genre = Genre;
+            ViewBag.Year = Year;
+            ViewBag.MinRating = MinRating;
+            ViewBag.MaxRating = MaxRating;
+            ViewBag.SortingBy = SortingBy;
+            
             Filter filter = new Filter() { Genre = Genre, Year = Year, MinRating = MinRating, MaxRating = MaxRating, SortingBy = SortingBy };
             var result = await _testService.GetMoviesWithFilters(filter);
             var data = result.results;
