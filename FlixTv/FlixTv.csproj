@@ -418,7 +418,6 @@
     <Content Include="Views\Movie\_MovieCategories.cshtml" />
     <Content Include="Views\Movie\Category.cshtml" />
     <Content Include="Views\Movie\_FilterBar.cshtml" />
-    <Content Include="Views\Movie\_CategoryResults.cshtml" />
     <Content Include="Views\Movie\_MovieDetails.cshtml" />
     <Content Include="Views\Movie\Details.cshtml" />
     <Content Include="Views\Movie\Search.cshtml" />
