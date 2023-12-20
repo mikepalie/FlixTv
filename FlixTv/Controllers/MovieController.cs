@@ -17,7 +17,7 @@ namespace FlixTv.Controllers
     {
         public ApplicationDbContext db = new ApplicationDbContext();
         
-        public MovieService _testService = new MovieService();
+        public MovieService _movieService = new MovieService();
 
         
 
@@ -38,11 +38,11 @@ namespace FlixTv.Controllers
             ViewBag.Special = special;
 
             Filter filter = new Filter() { Genre = Genre, Year = Year, MinRating = MinRating, MaxRating = MaxRating, SortingBy = SortingBy };
-            var result = await _testService.GetMoviesWithFilters(filter);
+            var result = await _movieService.GetMoviesWithFilters(filter);
             var data = result.results;
             
 
-            int pageSize = pSize ?? 18;
+            int pageSize = pSize ?? 15;
             int pageNumber = page ?? 1;
 
             return View(data.ToPagedList(pageNumber, pageSize)  );
@@ -57,11 +57,11 @@ namespace FlixTv.Controllers
         public async Task<ActionResult> Search(string Title, int? page, int? pSize)
         {
             ViewBag.Search = Title;
-            var result = await _testService.GetMoviesWithSearchingTitle(Title);
+            var result = await _movieService.GetMoviesWithSearchingTitle(Title);
             var data = result.results;
 
 
-            int pageSize = pSize ?? 18;
+            int pageSize = pSize ?? 15;
             int pageNumber = page ?? 1;
 
             return View(data.ToPagedList(pageNumber, pageSize));

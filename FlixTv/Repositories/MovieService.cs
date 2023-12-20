@@ -43,8 +43,7 @@ namespace FlixTv.Repositories
         {
             List<string> years = Year(filter.Year);
             // Construct the API URL with filtering parameters
-            string apiUrl = $"https://ott-details.p.rapidapi.com/advancedsearch?type=movie&genre={filter.Genre}&" +
-                $"start_year={years[0]}&end_year={years[1]}&min_imdb={filter.MinRating}&max_imdb={filter.MaxRating}&sort={filter.SortingBy}";
+            string apiUrl = $"https://ott-details.p.rapidapi.com/advancedsearch?genre={filter.Genre}&type=movie&start_year={years[0]}&end_year={years[1]}&min_imdb={filter.MinRating}&max_imdb={filter.MaxRating}&sort={filter.SortingBy}";
 
             // Add the required headers
             _httpClient.DefaultRequestHeaders.Clear(); // Clear existing headers, if any
