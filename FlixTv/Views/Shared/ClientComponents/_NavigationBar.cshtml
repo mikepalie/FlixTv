@@ -98,7 +98,7 @@
                     {
                         <ul class="header__nav">
                             <li class="header__nav-item">
-                                @Html.ActionLink("Create Account", "Register", new { @class = "header__user" })
+                                <a class="header__nav-link" href="@Url.Action("Register", "Account")">Create Account</a>
                             </li>
                             <li class="header__nav">
                                 <a href="/Account/Login" class="header__user">

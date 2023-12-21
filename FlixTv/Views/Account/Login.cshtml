@@ -14,10 +14,12 @@
                         @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "sign__form", role = "form" }))
                         {
                             @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <a href="/Home/Index" class="sign__logo">
                                 <img src="~/www/main/img/logo.svg" alt="">
                             </a>
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger", style="color:white" })
+                            <br />
                             <div class="sign__group">
                                 @Html.TextBoxFor(m => m.Email, new { @class = "sign__input", @placeholder = "Email" })
                                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger", style = "color:white" })
