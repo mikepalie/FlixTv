@@ -47,7 +47,8 @@ namespace FlixTv.Controllers
 
             return View(data.ToPagedList(pageNumber, pageSize)  );
         }
-
+       
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(string Id)
         {
             Movie movie = new Movie() { ImdbId = Id};
