@@ -153,7 +153,7 @@ namespace FlixTv.Controllers
             
             if (ModelState.IsValid)
             {
-                if(model.Agree == false)
+                if(model.RememberMe == false)
                 {
                     ViewBag.Message = "Must Agree to the Privacy Policy ";
                     return View(model);

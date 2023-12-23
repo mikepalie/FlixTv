@@ -31,11 +31,15 @@
                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger", style = "color:white" })
                         </div>
                         <div class="sign__group sign__group--checkbox">
-                            <input id="rememberMe" name="rememberMe" type="checkbox" checked="checked" value="true">
-                            <label for="rememberMe">Remember Me?</label>
+                            <input id="RememberMe" name="RememberMe" type="checkbox" checked="checked" value="true">
+                            <label for="RememberMe">Remember Me?</label>
                         </div>
-
-                        <button class="sign__btn" type="submit" value="Log in">Sign in</button>
+                        <div class="sign__group">
+                            <div class="sign__btn">
+                                <input type="submit" value="Sign in" class="sign__btn" />
+                            </div>
+                        </div>
+                        
 
                         <span class="sign__delimiter">or</span>
 
@@ -65,12 +69,4 @@
         @Scripts.Render("~/bundles/jqueryval")
 
     }
-
-
-
-
-
-
-
-
 
