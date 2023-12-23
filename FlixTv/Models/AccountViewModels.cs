@@ -82,8 +82,8 @@ namespace FlixTv.Models
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [Display(Name = "RememberMe")]
-        public bool RememberMe { get; set; }
+        [Display(Name = "Agree")]
+        public bool Agree { get; set; }
 
     }
 

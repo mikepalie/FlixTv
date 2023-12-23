@@ -153,7 +153,7 @@ namespace FlixTv.Controllers
             
             if (ModelState.IsValid)
             {
-                if(model.RememberMe == false)
+                if(model.Agree == false)
                 {
                     ViewBag.Message = "Must Agree to the Privacy Policy ";
                     return View(model);
@@ -163,13 +163,12 @@ namespace FlixTv.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -418,6 +417,16 @@ namespace FlixTv.Controllers
             var userId = User.Identity.GetUserId();
             UserManager.AddToRole(userId, "Premium");
             return Json(new { success = true, message = "Upgraded to Premium successfully" });
+        }
+
+        [AllowAnonymous]
+        public ActionResult UpgradeToFreeTrial()
+        {
+
+            var userId = User.Identity.GetUserId();
+            UserManager.AddToRole(userId, "FreeTrial");
+
+            return Json(new { success = true, message = "Upgraded to Free Trial successfully" });
         }
 
         protected override void Dispose(bool disposing)

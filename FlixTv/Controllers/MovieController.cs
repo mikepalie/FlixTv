@@ -10,6 +10,7 @@ using PagedList.Mvc;
 using FlixTv.Repositories;
 using System.Threading.Tasks;
 using Filter = FlixTv.Models.Filter;
+using FlixTv.Attributes;
 
 namespace FlixTv.Controllers
 {
@@ -47,10 +48,12 @@ namespace FlixTv.Controllers
 
             return View(data.ToPagedList(pageNumber, pageSize)  );
         }
-       
-        [Authorize(Roles = "Premium")]
+        [Authorize]
+        [CustomAuthorize(Roles = "Premium")]
+        [CustomAuthorize(Roles = "FreeTrial")]
         public ActionResult Details(string Id)
         {
+            
             Movie movie = new Movie() { ImdbId = Id};
             return View(movie);
         }

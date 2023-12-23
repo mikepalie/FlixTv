@@ -17,7 +17,22 @@
                         <li class="green"><svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43994 6.95981L6.77477 12.2924L17.4399 1.62723" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg> Exclusive Series</li>
                     </ul>
                     <span class="plan__price">$0.00<span>/month</span></span>
-                    <button class="plan__btn" type="button">Select plan</button>
+                    @if (Request.IsAuthenticated)
+                    {
+
+                        using (Html.BeginForm("UpgradeToFreeTrial", "Account", FormMethod.Post))
+                        {
+                            <button type="submit" class="plan__btn">Select plan</button>
+                        }
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("Login", "Account"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="plan__btn">Select plan</button>
+                        }
+                    }
                 </div>
             </div>
             @*---------------Free Trial End--------------*@
@@ -34,11 +49,24 @@
                         <li class="green"><svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43994 6.95981L6.77477 12.2924L17.4399 1.62723" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>Dive into binge-worthy moview & series available only on FlixTV</li>
                     </ul>
                     <span class="plan__price">$14.99<span>/month</span></span>
-                    @using (Html.BeginForm("UpgradeToPremium", "Account", FormMethod.Post))
+                    @if (Request.IsAuthenticated)
                     {
-                        <button type="submit" class="plan__btn">Select plan</button>
+
+                        using (Html.BeginForm("UpgradeToPremium", "Account", FormMethod.Post))
+                        {
+                            <button type="submit" class="plan__btn">Select plan</button>
+                        }
                     }
-                    
+                    else
+                    {
+                        using (Html.BeginForm("Login", "Account"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="plan__btn">Select plan</button>
+                        }
+                    }
+
+
                 </div>
             </div>
             @*---------------Regular End--------------*@         
