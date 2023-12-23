@@ -58,7 +58,8 @@ namespace FlixTv.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        
+        [Display(Name = "rememberMe")]
         public bool RememberMe { get; set; }
     }
 
@@ -80,6 +81,9 @@ namespace FlixTv.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
+        [Display(Name = "Agree")]
+        public bool Agree { get; set; }
 
     }
 

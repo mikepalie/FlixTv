@@ -4,11 +4,12 @@
 }
 
 
-<div class="sign section--full-bg" data-bg="img/bg.jpg">
+<div class="sign section--full-bg" style="background: url(/www/admin/img/bg.jpg) center center / cover no-repeat; ">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="sign__content">
+
                     <!-- registration form -->
                     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "sign__form", role = "form" }))
                     {
@@ -17,29 +18,30 @@
                         <a href="/Home/Index" class="sign__logo">
                             <img src="~/www/main/img/logo.svg" alt="">
                         </a>
-                        @Html.ValidationSummary("", new { @class = "text-danger", style = "color:white" })
+
+                        @Html.ValidationSummary("", new { @class = "text-danger", style = "color:red" })
                         <br />
                         <div class="sign__group">
                             @Html.TextBoxFor(m => m.Email, new { @class = "sign__input", @placeholder = "Email" })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger", style = "color:white" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="sign__group">
                             @Html.TextBoxFor(m => m.Password, new { @class = "sign__input", @placeholder = "Password" })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger", style = "color:white" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="sign__group">
                             @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "sign__input", @placeholder = "Confirm Password" })
-                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger", style = "color:white" })
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                         </div>
-
                         <div class="sign__group sign__group--checkbox">
-                            <input id="remember" name="remember" type="checkbox" checked="checked">
-                            <label for="remember">I agree to the <a href="~/www/main/privacy.html">Privacy Policy</a></label>
+                            <input id="Agree" name="Agree" type="checkbox" value="true">
+                            <label for="Agree">I agree to the <a href="~/www/main/privacy.html">Privacy Policy</a></label>
                         </div>
-
-                        <button class="sign__btn" type="submit">Sign up</button>
+                    
+                        <button class="sign__btn" type="submit" >Sign up</button>
+            
 
                         <span class="sign__delimiter">or</span>
 

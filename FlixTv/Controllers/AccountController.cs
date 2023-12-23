@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FlixTv.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FlixTv.Controllers
 {
@@ -400,7 +401,17 @@ namespace FlixTv.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
+            
             return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult UpgradeToPremium()
+        {
+            
+            var userId = User.Identity.GetUserId();
+            UserManager.AddToRole(userId, "Premium");
+            return Json(new { success = true, message = "Upgraded to Premium successfully" });
         }
 
         protected override void Dispose(bool disposing)
