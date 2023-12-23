@@ -150,8 +150,14 @@ namespace FlixTv.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            
             if (ModelState.IsValid)
             {
+                if(model.Agree == false)
+                {
+                    ViewBag.Message = "Must Agree to the Privacy Policy ";
+                    return View(model);
+                }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
